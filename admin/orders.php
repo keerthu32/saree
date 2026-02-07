@@ -35,7 +35,7 @@ include __DIR__ . '/../includes/header.php';
                     <form method="post" class="d-flex gap-2">
                         <input type="hidden" name="order_id" value="<?php echo h($order['id']); ?>">
                         <select name="status" class="form-select form-select-sm">
-                            <?php foreach (['PLACED', 'SHIPPED', 'DELIVERED'] as $status): ?>
+                            <?php foreach (['pending', 'processed', 'shipped', 'delivered', 'cancelled'] as $status): ?>
                                 <option value="<?php echo $status; ?>" <?php echo $order['status'] === $status ? 'selected' : ''; ?>>
                                     <?php echo $status; ?>
                                 </option>

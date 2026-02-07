@@ -12,7 +12,7 @@ $user = current_user();
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="<?php echo h(url('user/products.php')); ?>">Kurinji Sarees</a>
+        <a class="navbar-brand" href="<?php echo h(url('customer/products.php')); ?>">Kurinji Sarees</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <?php if ($user): ?>
@@ -20,13 +20,13 @@ $user = current_user();
                     <?php if ($user['role'] === 'admin'): ?>
                         <li class="nav-item"><a class="nav-link" href="<?php echo h(url('admin/dashboard.php')); ?>">Admin</a></li>
                     <?php else: ?>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo h(url('user/cart.php')); ?>">Cart</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo h(url('user/orders.php')); ?>">Orders</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<?php echo h(url('user/profile.php')); ?>">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo h(url('customer/cart.php')); ?>">Cart</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo h(url('customer/orders.php')); ?>">Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?php echo h(url('customer/profile.php')); ?>">Profile</a></li>
                     <?php endif; ?>
                     <li class="nav-item"><a class="nav-link" href="<?php echo h(url('logout.php')); ?>">Logout</a></li>
                 <?php else: ?>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo h(url('index.php')); ?>">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo h(url('login.php')); ?>">Login</a></li>
                 <?php endif; ?>
             </ul>
         </div>

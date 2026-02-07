@@ -18,7 +18,7 @@ function app_base_path()
         return '';
     }
     array_pop($parts);
-    if ($parts && in_array(end($parts), ['admin', 'user'], true)) {
+    if ($parts && in_array(end($parts), ['admin', 'customer'], true)) {
         array_pop($parts);
     }
     $base = '/' . implode('/', $parts);
@@ -43,7 +43,7 @@ function current_user()
 function require_login()
 {
     if (!current_user()) {
-        redirect(url('index.php'));
+        redirect(url('login.php'));
     }
 }
 
@@ -51,14 +51,14 @@ function require_admin()
 {
     require_login();
     if (current_user()['role'] !== 'admin') {
-        redirect(url('user/products.php'));
+        redirect(url('customer/products.php'));
     }
 }
 
-function require_user()
+function require_customer()
 {
     require_login();
-    if (current_user()['role'] !== 'user') {
+    if (current_user()['role'] !== 'customer') {
         redirect(url('admin/dashboard.php'));
     }
 }

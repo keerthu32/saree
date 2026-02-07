@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/init.php';
-require_user();
+require_customer();
 
 $category = $_GET['category'] ?? '';
 $minPrice = $_GET['min_price'] ?? '';
@@ -29,7 +29,7 @@ $categories = $pdo->query('SELECT DISTINCT category FROM products')->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id'])) {
     add_to_cart((int) $_POST['product_id'], (int) $_POST['quantity']);
-    redirect(url('user/cart.php'));
+    redirect(url('customer/cart.php'));
 }
 
 include __DIR__ . '/../includes/header.php';
@@ -73,7 +73,7 @@ include __DIR__ . '/../includes/header.php';
                             <h6 class="card-title"><?php echo h($product['name']); ?></h6>
                             <p class="small text-muted mb-1"><?php echo h($product['category']); ?></p>
                             <p class="fw-bold">₹<?php echo h($product['price']); ?></p>
-                            <a class="btn btn-sm btn-outline-secondary mb-2" href="<?php echo h(url('user/product.php?id=' . $product['id'])); ?>">View</a>
+                            <a class="btn btn-sm btn-outline-secondary mb-2" href="<?php echo h(url('customer/product.php?id=' . $product['id'])); ?>">View</a>
                             <form method="post" class="mt-auto">
                                 <input type="hidden" name="product_id" value="<?php echo h($product['id']); ?>">
                                 <input type="number" name="quantity" value="1" min="1" class="form-control mb-2">
