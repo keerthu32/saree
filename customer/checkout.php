@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/../includes/init.php';
-require_user();
+require_customer();
 
 $cart = cart_items();
 if (!$cart) {
-    redirect(url('user/cart.php'));
+    redirect(url('customer/cart.php'));
 }
 
 $ids = implode(',', array_map('intval', array_keys($cart)));
@@ -17,7 +17,7 @@ foreach ($products as $product) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo->beginTransaction();
     $stmt = $pdo->prepare('INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, ?)');
-    $stmt->execute([current_user()['id'], $total, 'PLACED']);
+    $stmt->execute([current_user()['id'], $total, 'pending']);
     $orderId = $pdo->lastInsertId();
 
     $itemStmt = $pdo->prepare('INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)');
@@ -29,9 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stockStmt->execute([$qty, $product['id']]);
     }
 
+    $paymentStatus = 'success';
+    if ($paymentStatus === 'success') {
+        $statusStmt = $pdo->prepare('UPDATE orders SET status = ? WHERE id = ?');
+        $statusStmt->execute(['processed', $orderId]);
+    }
+
     $pdo->commit();
     $_SESSION['cart'] = [];
-    redirect(url('user/orders.php'));
+    redirect(url('customer/orders.php'));
 }
 
 include __DIR__ . '/../includes/header.php';

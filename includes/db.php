@@ -1,5 +1,6 @@
 <?php
-$driver = getenv('DB_DRIVER') ?: 'mysql';
+$config = require __DIR__ . '/../config.php';
+$driver = $config['driver'];
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -7,14 +8,14 @@ $options = [
 
 try {
     if ($driver === 'sqlite') {
-        $path = getenv('DB_SQLITE_PATH') ?: __DIR__ . '/../database.sqlite';
+        $path = $config['sqlite_path'];
         $dsn = "sqlite:{$path}";
         $pdo = new PDO($dsn, null, null, $options);
     } else {
-        $host = getenv('DB_HOST') ?: '127.0.0.1';
-        $dbname = getenv('DB_NAME') ?: 'kurinji_sarees';
-        $user = getenv('DB_USER') ?: 'root';
-        $pass = getenv('DB_PASS') ?: '';
+        $host = $config['host'];
+        $dbname = $config['name'];
+        $user = $config['user'];
+        $pass = $config['pass'];
         $dsn = "mysql:host={$host};dbname={$dbname};charset=utf8mb4";
         $pdo = new PDO($dsn, $user, $pass, $options);
     }

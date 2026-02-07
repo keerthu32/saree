@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . '/../includes/init.php';
-require_user();
+require_customer();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($_POST['qty'] as $productId => $qty) {
         update_cart((int) $productId, (int) $qty);
     }
-    redirect(url('user/cart.php'));
+    redirect(url('customer/cart.php'));
 }
 
 $cart = cart_items();
@@ -52,11 +52,11 @@ include __DIR__ . '/../includes/header.php';
             </tbody>
         </table>
         <div class="d-flex justify-content-between">
-            <a class="btn btn-outline-secondary" href="<?php echo h(url('user/products.php')); ?>">Continue Shopping</a>
+            <a class="btn btn-outline-secondary" href="<?php echo h(url('customer/products.php')); ?>">Continue Shopping</a>
             <div>
                 <strong class="me-3">Total: ₹<?php echo h($total); ?></strong>
                 <button class="btn btn-outline-dark">Update Cart</button>
-                <a class="btn btn-primary" href="<?php echo h(url('user/checkout.php')); ?>">Checkout</a>
+                <a class="btn btn-primary" href="<?php echo h(url('customer/checkout.php')); ?>">Checkout</a>
             </div>
         </div>
     </form>

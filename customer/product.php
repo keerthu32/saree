@@ -1,23 +1,23 @@
 <?php
 require_once __DIR__ . '/../includes/init.php';
-require_user();
+require_customer();
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    redirect(url('user/products.php'));
+    redirect(url('customer/products.php'));
 }
 
 $stmt = $pdo->prepare('SELECT * FROM products WHERE id = ?');
 $stmt->execute([$id]);
 $product = $stmt->fetch();
 if (!$product) {
-    redirect(url('user/products.php'));
+    redirect(url('customer/products.php'));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add_cart'])) {
         add_to_cart((int) $id, (int) $_POST['quantity']);
-        redirect(url('user/cart.php'));
+        redirect(url('customer/cart.php'));
     }
 
     if (isset($_POST['review'])) {

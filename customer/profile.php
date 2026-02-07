@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/init.php';
-require_user();
+require_customer();
 
 $user = current_user();
 $message = '';

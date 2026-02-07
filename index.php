@@ -1,114 +1,58 @@
 <?php
 require_once __DIR__ . '/includes/init.php';
 
-$errors = [];
-$activeTab = $_POST['action'] ?? 'login';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['action'] === 'login') {
-        $email = trim($_POST['email']);
-        $password = $_POST['password'];
-
-        $stmt = $pdo->prepare('SELECT id, name, email, password, role FROM users WHERE email = ?');
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
-
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user'] = [
-                'id' => $user['id'],
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'role' => $user['role'],
-            ];
-            if ($user['role'] === 'admin') {
-                redirect(url('admin/dashboard.php'));
-            }
-            redirect(url('user/products.php'));
-        }
-        $errors[] = 'Invalid login credentials.';
+if (current_user()) {
+    if (current_user()['role'] === 'admin') {
+        redirect(url('admin/dashboard.php'));
     }
-
-    if ($_POST['action'] === 'register') {
-        $name = trim($_POST['name']);
-        $email = trim($_POST['email']);
-        $password = $_POST['password'];
-
-        if ($name === '' || $email === '' || $password === '') {
-            $errors[] = 'All fields are required.';
-        } else {
-            $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ?');
-            $stmt->execute([$email]);
-            if ($stmt->fetch()) {
-                $errors[] = 'Email already registered.';
-            } else {
-                $hash = password_hash($password, PASSWORD_BCRYPT);
-                $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)');
-                $stmt->execute([$name, $email, $hash, 'user']);
-                $activeTab = 'login';
-            }
-        }
-    }
+    redirect(url('customer/products.php'));
 }
+
+$featured = $pdo->query('SELECT id, name, price, image_url FROM products ORDER BY created_at DESC LIMIT 4')->fetchAll();
 
 include __DIR__ . '/includes/header.php';
 ?>
-<div class="row justify-content-center">
+<div class="row align-items-center mb-5">
+    <div class="col-lg-6">
+        <h1 class="display-5 fw-bold">Kurinji Handloom Sarees</h1>
+        <p class="lead text-muted">Discover authentic handloom collections crafted by artisans. Create an account to shop, track orders, and share reviews.</p>
+        <div class="d-flex gap-2">
+            <a class="btn btn-primary" href="<?php echo h(url('login.php')); ?>">Login</a>
+            <a class="btn btn-outline-secondary" href="<?php echo h(url('register.php')); ?>">Register</a>
+        </div>
+    </div>
     <div class="col-lg-6">
         <div class="card shadow-sm">
             <div class="card-body">
-                <h4 class="mb-3 text-center">Login / Register</h4>
-                <?php if ($errors): ?>
-                    <div class="alert alert-danger">
-                        <?php foreach ($errors as $error): ?>
-                            <div><?php echo h($error); ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link <?php echo $activeTab === 'login' ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#login">Login</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link <?php echo $activeTab === 'register' ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#register">Register</button>
-                    </li>
+                <h5 class="card-title">Why shop with us?</h5>
+                <ul class="mb-0 text-muted">
+                    <li>Handpicked artisan-made sarees.</li>
+                    <li>Secure orders with dummy checkout flow.</li>
+                    <li>Track your purchases and leave reviews.</li>
                 </ul>
-                <div class="tab-content pt-3">
-                    <div class="tab-pane fade <?php echo $activeTab === 'login' ? 'show active' : ''; ?>" id="login">
-                        <form method="post">
-                            <input type="hidden" name="action" value="login">
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <button class="btn btn-primary w-100">Login</button>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade <?php echo $activeTab === 'register' ? 'show active' : ''; ?>" id="register">
-                        <form method="post">
-                            <input type="hidden" name="action" value="register">
-                            <div class="mb-3">
-                                <label class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-                            <button class="btn btn-success w-100">Create Account</button>
-                        </form>
-                    </div>
-                </div>
-                <p class="text-muted mt-3">Admin accounts must be created directly in the database.</p>
             </div>
         </div>
     </div>
+</div>
+
+<h4 class="mb-3">Latest Arrivals</h4>
+<div class="row g-3">
+    <?php if (!$featured): ?>
+        <p class="text-muted">No products added yet. Please check back soon.</p>
+    <?php else: ?>
+        <?php foreach ($featured as $product): ?>
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100">
+                    <?php if ($product['image_url']): ?>
+                        <img src="<?php echo h($product['image_url']); ?>" class="card-img-top" alt="<?php echo h($product['name']); ?>">
+                    <?php endif; ?>
+                    <div class="card-body">
+                        <h6 class="card-title"><?php echo h($product['name']); ?></h6>
+                        <p class="mb-0">₹<?php echo h($product['price']); ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
 <?php include __DIR__ . '/includes/footer.php'; ?>
