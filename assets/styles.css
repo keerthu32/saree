@@ -6,6 +6,13 @@
 
 body {
     font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main.app-content {
+    flex: 1;
 }
 
 .navbar-brand span {
@@ -60,4 +67,5 @@ body {
 .footer {
     background: #0f1d3a;
     color: rgba(255, 255, 255, 0.7);
+    margin-top: auto;
 }

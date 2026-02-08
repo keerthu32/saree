@@ -39,4 +39,5 @@ $user = current_user();
         </div>
     </div>
 </nav>
-<div class="container py-4">
+<main class="app-content">
+    <div class="container py-4">

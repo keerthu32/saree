@@ -1,4 +1,5 @@
-</div>
+    </div>
+</main>
 <footer class="footer mt-5">
     <div class="container py-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
         <div>
