@@ -11,8 +11,16 @@ $orders = $pdo->query('SELECT orders.*, users.name AS customer FROM orders JOIN 
 
 include __DIR__ . '/../includes/header.php';
 ?>
-<h3 class="mb-3">Orders</h3>
-<table class="table table-hover">
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h3 class="mb-1">Orders</h3>
+        <p class="text-muted mb-0">Review customer orders and update delivery status.</p>
+    </div>
+    <span class="badge badge-soft px-3 py-2">Status Control</span>
+</div>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
     <thead>
         <tr>
             <th>ID</th>
@@ -29,7 +37,11 @@ include __DIR__ . '/../includes/header.php';
                 <td>#<?php echo h($order['id']); ?></td>
                 <td><?php echo h($order['customer']); ?></td>
                 <td>₹<?php echo h($order['total_amount']); ?></td>
-                <td><?php echo h($order['status']); ?></td>
+                <td>
+                    <span class="badge <?php echo $order['status'] === 'DELIVERED' ? 'text-bg-success' : ($order['status'] === 'SHIPPED' ? 'text-bg-info' : 'text-bg-warning'); ?>">
+                        <?php echo h($order['status']); ?>
+                    </span>
+                </td>
                 <td><?php echo h($order['created_at']); ?></td>
                 <td>
                     <form method="post" class="d-flex gap-2">
@@ -47,5 +59,7 @@ include __DIR__ . '/../includes/header.php';
             </tr>
         <?php endforeach; ?>
     </tbody>
-</table>
+        </table>
+    </div>
+</div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

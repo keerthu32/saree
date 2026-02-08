@@ -1,0 +1,63 @@
+:root {
+    --brand-primary: #1f3c88;
+    --brand-accent: #f5b700;
+    --brand-muted: #f7f7fb;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+.navbar-brand span {
+    color: var(--brand-accent);
+}
+
+.hero {
+    background: linear-gradient(120deg, #1f3c88, #1a2b5f);
+    color: #fff;
+    border-radius: 18px;
+    padding: 2.5rem;
+}
+
+.hero small {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+}
+
+.section-title {
+    font-weight: 600;
+    color: #1a2b5f;
+}
+
+.badge-soft {
+    background: rgba(31, 60, 136, 0.1);
+    color: #1f3c88;
+}
+
+.table thead {
+    background: var(--brand-muted);
+}
+
+.summary-card {
+    background: #fff;
+    border: 1px solid #eef0f5;
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.rating-stars {
+    color: #f5b700;
+}
+
+.footer {
+    background: #0f1d3a;
+    color: rgba(255, 255, 255, 0.7);
+}

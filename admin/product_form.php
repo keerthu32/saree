@@ -41,8 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include __DIR__ . '/../includes/header.php';
 ?>
-<h3 class="mb-3"><?php echo $id ? 'Edit' : 'Add'; ?> Product</h3>
-<form method="post" class="card p-4">
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h3 class="mb-1"><?php echo $id ? 'Edit' : 'Add'; ?> Product</h3>
+        <p class="text-muted mb-0">Keep product details accurate and descriptive.</p>
+    </div>
+    <span class="badge badge-soft px-3 py-2">Inventory Control</span>
+</div>
+<form method="post" class="card p-4 shadow-sm">
     <div class="row g-3">
         <div class="col-md-6">
             <label class="form-label">Name</label>
@@ -69,8 +75,8 @@ include __DIR__ . '/../includes/header.php';
             <input type="text" name="image_url" class="form-control" value="<?php echo h($product['image_url']); ?>">
         </div>
     </div>
-    <div class="mt-3">
-        <button class="btn btn-primary">Save</button>
+    <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-primary"><i class="bi bi-save me-1"></i>Save</button>
         <a class="btn btn-outline-secondary" href="<?php echo h(url('admin/products.php')); ?>">Cancel</a>
     </div>
 </form>

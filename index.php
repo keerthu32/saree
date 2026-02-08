@@ -52,10 +52,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include __DIR__ . '/includes/header.php';
 ?>
-<div class="row justify-content-center">
+<div class="row g-4 align-items-center">
     <div class="col-lg-6">
-        <div class="card shadow-sm">
-            <div class="card-body">
+        <div class="hero shadow-lg">
+            <h2 class="fw-semibold">Kurinji Handloom Sarees</h2>
+            <p class="mb-4">A curated collection of authentic weaves, premium zari, and artisanal craftsmanship.</p>
+            <div class="d-flex gap-3">
+                <div>
+                    <h5 class="mb-0">200+</h5>
+                    <small>Handpicked designs</small>
+                </div>
+                <div>
+                    <h5 class="mb-0">24/7</h5>
+                    <small>Order tracking</small>
+                </div>
+                <div>
+                    <h5 class="mb-0">100%</h5>
+                    <small>Secure checkout</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-4">
                 <h4 class="mb-3 text-center">Login / Register</h4>
                 <?php if ($errors): ?>
                     <div class="alert alert-danger">
@@ -64,7 +84,7 @@ include __DIR__ . '/includes/header.php';
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-pills justify-content-center mb-3" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link <?php echo $activeTab === 'login' ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#login">Login</button>
                     </li>
@@ -72,41 +92,41 @@ include __DIR__ . '/includes/header.php';
                         <button class="nav-link <?php echo $activeTab === 'register' ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#register">Register</button>
                     </li>
                 </ul>
-                <div class="tab-content pt-3">
+                <div class="tab-content">
                     <div class="tab-pane fade <?php echo $activeTab === 'login' ? 'show active' : ''; ?>" id="login">
-                        <form method="post">
+                        <form method="post" class="mt-3">
                             <input type="hidden" name="action" value="login">
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
                             </div>
                             <button class="btn btn-primary w-100">Login</button>
                         </form>
                     </div>
                     <div class="tab-pane fade <?php echo $activeTab === 'register' ? 'show active' : ''; ?>" id="register">
-                        <form method="post">
+                        <form method="post" class="mt-3">
                             <input type="hidden" name="action" value="register">
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" required>
+                                <input type="text" name="name" class="form-control" placeholder="Full name" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control" required>
+                                <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type="password" name="password" class="form-control" placeholder="Create a password" required>
                             </div>
                             <button class="btn btn-success w-100">Create Account</button>
                         </form>
                     </div>
                 </div>
-                <p class="text-muted mt-3">Admin accounts must be created directly in the database.</p>
+                <p class="text-muted mt-3 mb-0 text-center">Admin accounts must be created directly in the database.</p>
             </div>
         </div>
     </div>

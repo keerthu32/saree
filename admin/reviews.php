@@ -6,8 +6,16 @@ $reviews = $pdo->query('SELECT reviews.*, users.name AS reviewer, products.name 
 
 include __DIR__ . '/../includes/header.php';
 ?>
-<h3 class="mb-3">Product Reviews</h3>
-<table class="table table-striped">
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h3 class="mb-1">Product Reviews</h3>
+        <p class="text-muted mb-0">Monitor customer feedback and product sentiment.</p>
+    </div>
+    <span class="badge badge-soft px-3 py-2">Quality Insights</span>
+</div>
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
     <thead>
         <tr>
             <th>Product</th>
@@ -22,11 +30,13 @@ include __DIR__ . '/../includes/header.php';
             <tr>
                 <td><?php echo h($review['product_name']); ?></td>
                 <td><?php echo h($review['reviewer']); ?></td>
-                <td><?php echo h($review['rating']); ?>/5</td>
+                <td><span class="rating-stars">★</span> <?php echo h($review['rating']); ?>/5</td>
                 <td><?php echo h($review['comment']); ?></td>
                 <td><?php echo h($review['created_at']); ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
-</table>
+        </table>
+    </div>
+</div>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
