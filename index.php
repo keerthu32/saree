@@ -102,10 +102,17 @@ include __DIR__ . '/includes/header.php';
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                                <input type="password" name="password" class="form-control" placeholder="••••••••" required data-password-field>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="toggleLoginPassword">
+                                    <label class="form-check-label" for="toggleLoginPassword">Show password</label>
+                                </div>
                             </div>
                             <button class="btn btn-primary w-100">Login</button>
                         </form>
+                        <div class="text-center mt-3">
+                            <a class="small" href="<?php echo h(url('register.php')); ?>">Create a new account</a>
+                        </div>
                     </div>
                     <div class="tab-pane fade <?php echo $activeTab === 'register' ? 'show active' : ''; ?>" id="register">
                         <form method="post" class="mt-3">
@@ -120,10 +127,17 @@ include __DIR__ . '/includes/header.php';
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="Create a password" required>
+                                <input type="password" name="password" class="form-control" placeholder="Create a password" required data-password-field>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="toggleRegisterPassword">
+                                    <label class="form-check-label" for="toggleRegisterPassword">Show password</label>
+                                </div>
                             </div>
                             <button class="btn btn-success w-100">Create Account</button>
                         </form>
+                        <div class="text-center mt-3">
+                            <a class="small" href="<?php echo h(url('index.php')); ?>">Already have an account?</a>
+                        </div>
                     </div>
                 </div>
                 <p class="text-muted mt-3 mb-0 text-center">Admin accounts must be created directly in the database.</p>
@@ -131,4 +145,28 @@ include __DIR__ . '/includes/header.php';
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleLogin = document.getElementById('toggleLoginPassword');
+        const toggleRegister = document.getElementById('toggleRegisterPassword');
+
+        if (toggleLogin) {
+            toggleLogin.addEventListener('change', function () {
+                const field = document.querySelector('#login [data-password-field]');
+                if (field) {
+                    field.type = this.checked ? 'text' : 'password';
+                }
+            });
+        }
+
+        if (toggleRegister) {
+            toggleRegister.addEventListener('change', function () {
+                const field = document.querySelector('#register [data-password-field]');
+                if (field) {
+                    field.type = this.checked ? 'text' : 'password';
+                }
+            });
+        }
+    });
+</script>
 <?php include __DIR__ . '/includes/footer.php'; ?>
