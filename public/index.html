@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kurinji Handloom Saree Store</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+<header>
+  <div>
+    <strong>Kurinji Handloom Saree</strong>
+    <div class="muted">Ecommerce Storefront</div>
+  </div>
+  <nav><a href="/admin">Admin Dashboard</a></nav>
+</header>
+
+<main class="container">
+  <section class="card">
+    <h2>Shop Sarees</h2>
+    <div id="products" class="grid"></div>
+  </section>
+
+  <aside class="card">
+    <h2>Cart & Checkout</h2>
+    <div id="cartItems"></div>
+    <p><strong>Total:</strong> ₹<span id="cartTotal">0</span></p>
+
+    <h3>Customer Details</h3>
+    <input id="customerName" placeholder="Customer name" />
+    <input id="customerPhone" placeholder="Phone" />
+    <textarea id="customerAddress" placeholder="Address"></textarea>
+    <button id="placeOrderBtn">Place Order</button>
+    <div id="message"></div>
+  </aside>
+</main>
+
+<script src="/assets/storefront.js"></script>
+</body>
+</html>
